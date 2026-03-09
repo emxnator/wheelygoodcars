@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 
 class CarController extends Controller
 {
@@ -27,14 +26,6 @@ class CarController extends Controller
 
         // Store license plate in session for step 2
         session(['car_data' => ['license_plate' => $validated['license_plate']]]);
-
-        // Optional: Fetch car data from RDW API (Dutch vehicle registration)
-        // This is a placeholder - you can implement actual API call if needed
-        $carData = $this->fetchCarDataFromAPI($validated['license_plate']);
-        
-        if ($carData) {
-            session()->put('car_data', array_merge(session('car_data', []), $carData));
-        }
 
         return redirect()->route('cars.create.details');
     }
@@ -137,33 +128,5 @@ class CarController extends Controller
 
         return redirect()->route('cars.my-listings')
             ->with('success', 'Auto succesvol verwijderd.');
-    }
-
-    /**
-     * Fetch car data from external API (placeholder).
-     */
-    private function fetchCarDataFromAPI($licensePlate)
-    {
-        // This is a placeholder for RDW API integration
-        // You can implement actual API call here
-        // For now, return null to skip auto-fill
-        
-        /* Example implementation:
-        try {
-            $response = Http::get('https://api.rdw.nl/v1/kenteken/' . $licensePlate);
-            if ($response->successful()) {
-                $data = $response->json();
-                return [
-                    'brand' => $data['merk'] ?? null,
-                    'model' => $data['handelsbenaming'] ?? null,
-                    // etc.
-                ];
-            }
-        } catch (\Exception $e) {
-            // Handle error
-        }
-        */
-        
-        return null;
     }
 }
