@@ -47,12 +47,4 @@ class Car extends Model
     {
         return $query->whereNull('sold_at');
     }
-
-    /**
-     * Check if the car is sold.
-     */
-    public function isSold(): bool
-    {
-        return !is_null($this->sold_at);
-    }
 }

@@ -70,7 +70,6 @@ class CarController extends Controller
 
         $carData = array_merge(session('car_data', []), $validated);
 
-        // Create the car using the relationship (automatically sets user_id)
         /** @var \App\Models\User $user */
         $user = auth()->user();
         $car = $user->cars()->create($carData);
@@ -99,7 +98,6 @@ class CarController extends Controller
      */
     public function myListings()
     {
-        // Using the relationship method as recommended
         /** @var \App\Models\User $user */
         $user = auth()->user();
         $cars = $user->cars()->orderBy('created_at', 'desc')->get();
